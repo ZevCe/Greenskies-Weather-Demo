@@ -1,0 +1,102 @@
+
+
+#result {
+    display: none;
+}
+
+.row {
+    display: flex;
+}
+
+
+#dayHeader1 {
+    height: 5%;
+    width: 14%;
+    border-top: 5px;
+    border-left: 5px;
+    border-right: 2px;
+    border-bottom: 2px;
+    margin: 0%;
+    border-color: black;
+    border-style: solid;
+    text-align: center;
+}
+
+.dayHeader {
+    height: 5%;
+    width: 14%;
+    border-top: 5px;
+    border-left: 3px;
+    border-right: 2px;
+    border-bottom: 2px;
+    margin: 0%;
+    border-color: black;
+    border-style: solid;
+    text-align: center;
+}
+
+#dayHeader7 {
+    height: 5%;
+    width: 14%;
+    border-top: 5px;
+    border-left: 3px;
+    border-right: 5px;
+    border-bottom: 2px;
+    margin: 0%;
+    border-color: black;
+    border-style: solid;
+    text-align: center;
+}
+
+
+#dayData1 {
+    height: 70%;
+    width: 14%;
+    border-top: 3px;
+    border-left: 5px;
+    border-right: 2px;
+    border-bottom: 5px;
+    margin: 0%;
+    border-color: black;
+    border-style: solid;
+    text-align: center;
+}
+
+.dayData {
+    height: 70%;
+    width: 14%;
+    border-top: 3px;
+    border-left: 3px;
+    border-right: 2px;
+    border-bottom: 5px;
+    margin: 0%;
+    border-color: black;
+    border-style: solid;
+    text-align: center;
+}
+
+#dayData7 {
+    height: 70%;
+    width: 14%;
+    border-top: 3px;
+    border-left: 3px;
+    border-right: 5px;
+    border-bottom: 5px;
+    margin: 0%;
+    border-color: black;
+    border-style: solid;
+    text-align: center;
+}
+
+.dayImage {
+    max-width: 90%;
+    margin: 3%;
+}
+
+.hour {
+    height: 40px;
+    width: 40px;
+    border-width: 10px;
+    border-color: black;
+    border-style: solid;
+}

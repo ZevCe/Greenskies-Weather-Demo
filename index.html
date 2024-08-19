@@ -9,5 +9,91 @@
 </head>
 
 <body>
-    <p>hello world</p>
+
+    <div id="search"> 
+        <p>Enter City</p>
+        <input id="zipInput"> </input> 
+        <br>
+        <button onclick="findZip();"> Submit </button>
+    </div>
+
+    <div id="result">
+
+        <!--headers displaying each day of the week-->
+        <div class="row"> 
+            <div id="dayHeader1"></div>
+            <div id="dayHeader2" class="dayHeader"></div>
+            <div id="dayHeader3" class="dayHeader"></div>
+            <div id="dayHeader4" class="dayHeader"></div>
+            <div id="dayHeader5" class="dayHeader"></div>
+            <div id="dayHeader6" class="dayHeader"></div>
+            <div id="dayHeader7"></div>
+        </div>
+
+        <!--boxes displaying temps and conditions-->
+        <div class="row"> 
+            <div id="dayData1"> 
+                <img src="./assets/sunny.png" class="dayImage">
+                <br>
+                <div class="row"><p class="high"></p> <p class="low"></p></div>
+            </div>
+            
+            <div id="dayData2" class="dayData"> 
+                <img src="./assets/sunny.png" class="dayImage"> 
+                <br>
+                <h1>72</h1>
+            </div>
+            
+            <div id="dayData3" class="dayData"> 
+                <img src="./assets/sunny.png" class="dayImage"> 
+                <br>
+                <h1>72</h1>
+            </div>
+            
+            <div id="dayData4" class="dayData"> 
+                <img src="./assets/sunny.png" class="dayImage"> 
+                <br>
+                <h1>72</h1>
+            </div>
+            
+            <div id="dayData5" class="dayData"> 
+                <img src="./assets/sunny.png" class="dayImage"> 
+                <br>
+                <h1>72</h1>
+            </div>
+            
+            <div id="dayData6" class="dayData"> 
+                <img src="./assets/sunny.png" class="dayImage"> 
+                <br>
+                <h1>72</h1>
+            </div>
+            
+            <div id="dayData7"> 
+                <img src="./assets/sunny.png" class="dayImage"> 
+                <br>
+                <h1>72</h1>
+            </div>
+        </div>
+
+
+    </div>
+
+
+    <!--
+    <div class="row">
+        <div class="hour"> a</div>
+        <div class="hour"> a</div>
+        <div class="hour">a </div>
+        <div class="hour"> a</div>
+        <div class="hour"> a</div>
+        <div class="hour">a </div>
+        <div class="hour">a </div>
+        <div class="hour">a </div>
+        <div class="hour"> a</div>
+        <div class="hour">a </div>
+        <div class="hour">a </div>
+        <div class="hour"> a</div>
+    </div>
+    -->
+
 </body>
