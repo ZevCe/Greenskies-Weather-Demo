@@ -1,54 +1,56 @@
-//need to figure out how to do api keys securely later
-const apiKey = "////////";
 
 function findZip() {
     //sanity checking input was read correctly
-    console.log(document.getElementById("zipInput").value);
-
-    //for now we are purposefully making a bad api request
-    //this is mostly here just to practice fetch syntax
-    //planning on switching to a better api tomorrow
-    const requestURL = "http://dataservice.accuweather.com/garbageRequest";
-    const requestParameters = {
-        method: "GET",
-        headers: {
-            apikey: apiKey,
-            q: "//////",
-        }
+    let zip = document.getElementById("zipInput").value;
+    console.log(zip);
+    if(!/^\d{5}(-\d{4})?$/.test(zip)) {
+        console.error("invalid zip!");
+        return;
     }
 
-    fetch(requestURL, requestParameters)
-        .then(response => {
+    //creating our request, which for the scope of this app is the only request we will need
+    //since we are using a free plan there is no need to hide the api key
+    let requestUrl = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/" + zip + "?key=BDYB2F43GCAVB8YW96AWX9SV7"
+
+    //calling the api and getting our data
+    fetch(requestUrl, {mode: 'cors'})
+        .then(function(response) {
             if (!response.ok) {
-                if(response.status === 404) {
-                    throw new Error("Correct error thrown!");
-                }
-                else {
-                    throw new Error("Unexpected error thrown");
-                }
+                console.error("API Issue!");
             }
             return response.json();
         })
-        .then(data => {
-            console.log("data retrieved sucessfully!!");
+        .then(function(response) {
+            console.log(response);
+            updateDisplay(response)
+        });
 
-        })
-        .then(error => {
-            console.error("Error: ", error);
-        })
 
+    //unhiding all of our other html, make in if/else statement checking for validity
     document.getElementById("result").style.display = "block";
+
+    //filling in all of our other html elements with data
     updateDisplay();
-    //need to prevent this from happening more than once, once submit is functional
-    setInterval(updateDisplay(), 60000);
 }
 
-function updateDisplay() {
+//helper function for updating the icons in our display
+function updateIcon(element, conditions) {
+    //if else statement for determinging which icon to use
+    //would be a switch case but we aren't looking for exact matching
+    if(conditions.includes("Rain")) element.src = "./assets/rainy.png";
+    else if(conditions.includes("Overcast")) element.src = "./assets/cloudy.png";
+    else if(conditions.includes("Partially cloudy")) element.src = "./assets/partlyCloudy.png";
+    else if(conditions.includes("Clear")) element.src = "./assets/sunny.png";
+    else {element.src = "./assets/snowy.png"; console.log(conditions);}
+}
+
+//updating all the elements of our display
+//need to check for imperial/metric
+function updateDisplay(results) {
     
     //creating a date object that is... up to date
     //...I'm so funny please hire me
     let currentDate = new Date();
-
 
     //finding out current hour
     let currentHour = currentDate.getHours();
@@ -74,6 +76,17 @@ function updateDisplay() {
 
         //updating our header
         header.innerHTML = hours[hourIndex];
+
+        //accessing and updating the icon
+        let hourIcon = hourInfo.getElementsByClassName("containerImage")[0];
+        updateIcon(hourIcon, results.days[0].hours[i-1].conditions);
+
+        //accessing and updating wind speeds
+        let windSpeed = hourInfo.getElementsByClassName("hourWindDiv")[0].getElementsByClassName("hourWindText")[0];
+        windSpeed.innerHTML = Math.round(results.days[0].hours[i-1].windspeed) + " mph";
+
+        //accessing and updating temp
+        hourInfo.getElementsByClassName("hourTemp")[0].innerHTML = Math.round(results.days[0].hours[i-1].temp) + "\u00B0";
     }
 
 
@@ -83,8 +96,8 @@ function updateDisplay() {
     //creating an array of days to reference with our headers
     let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
-    //iterating through our day display and setting the
-    //day they are displaying to be the correct day
+
+    //iterating through our day displays
     for(let i = 1; i < 8; i++) {
         //accessing the element
         let dayInfo = document.getElementById("dayData" + i);
@@ -97,9 +110,26 @@ function updateDisplay() {
         
         //updating our header
         header.innerHTML = days[dayIndex];
+
+        //accessing and updating the icon
+        let dayWeatherIcon = dayInfo.getElementsByClassName("containerImage")[0];
+        updateIcon(dayWeatherIcon, results.days[i-1].conditions);
+
+        //accessing and updating the rain chance text
+        let rainChanceText = dayInfo.getElementsByClassName("dayRainDiv")[0].getElementsByClassName("dayRainText")[0];
+        rainChanceText.innerHTML = results.days[i-1].precipprob + "%";
+
+        //accessing and updating the high and low temp text
+        let highLowContainer = dayInfo.getElementsByClassName("highLowContainer")[0];
+        highLowContainer.getElementsByClassName("high")[0].innerHTML = Math.round(results.days[i-1].tempmax) + "\u00B0";
+        highLowContainer.getElementsByClassName("low")[0].innerHTML = Math.round(results.days[i-1].tempmin) + "\u00B0";
     }
 }
 
+
+
+//need to add comments
+//function for switching units between imperial and metric
 let isImperial = true;
 
 function setUnit(input) {
