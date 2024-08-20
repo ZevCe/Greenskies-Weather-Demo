@@ -1,102 +1,129 @@
-
-
-#result {
-    display: none;
+hr {
+    height: .20em;
 }
 
 .row {
     display: flex;
 }
 
+.containerImage {
+    max-width: 90%;
+    margin: 3%;
+}
 
-#dayHeader1 {
-    height: 5%;
-    width: 14%;
-    border-top: 5px;
-    border-left: 5px;
-    border-right: 2px;
-    border-bottom: 2px;
-    margin: 0%;
+.sectionHeader {
+    text-align: center;
+    font-size: 2em;
+}
+
+.spacer {
+    margin: 3%;
+}
+
+#result {
+    display: none;
+}
+
+.hourData {
+    width: 8%;
+    border-width: .25em;
+    border-right: 0em;
     border-color: black;
     border-style: solid;
     text-align: center;
 }
 
-.dayHeader {
-    height: 5%;
-    width: 14%;
-    border-top: 5px;
-    border-left: 3px;
-    border-right: 2px;
-    border-bottom: 2px;
-    margin: 0%;
+#hourData12 {
+    width: 8%;
+    border-width: .25em;
     border-color: black;
     border-style: solid;
     text-align: center;
 }
 
-#dayHeader7 {
-    height: 5%;
-    width: 14%;
-    border-top: 5px;
-    border-left: 3px;
-    border-right: 5px;
-    border-bottom: 2px;
-    margin: 0%;
-    border-color: black;
-    border-style: solid;
-    text-align: center;
+.hourHeader {
+    margin: 0%; 
+    margin-top: 5%;
+    font-size: 1.25em; 
 }
 
+.hourWindDiv {
+    display: flex; 
+    margin-top: -5%;
+    padding-left: 15%;
+}
 
-#dayData1 {
-    height: 70%;
-    width: 14%;
-    border-top: 3px;
-    border-left: 5px;
-    border-right: 2px;
-    border-bottom: 5px;
+.hourWindImage {
+    max-width: 20%;
+    margin-right: 5%;
+    margin-bottom: 8%;
+}
+
+.hourWindText {
     margin: 0%;
-    border-color: black;
-    border-style: solid;
-    text-align: center;
+}
+
+.hourTemp {
+    margin: 0%;
+    margin-top: 0%;
+    margin-bottom: 5%; 
+    font-size: 1.5em; 
 }
 
 .dayData {
-    height: 70%;
     width: 14%;
-    border-top: 3px;
-    border-left: 3px;
-    border-right: 2px;
-    border-bottom: 5px;
-    margin: 0%;
+    border: .25em;
+    border-right: 0em;
     border-color: black;
     border-style: solid;
     text-align: center;
 }
 
 #dayData7 {
-    height: 70%;
     width: 14%;
-    border-top: 3px;
-    border-left: 3px;
-    border-right: 5px;
-    border-bottom: 5px;
-    margin: 0%;
+    border: .25em;
     border-color: black;
     border-style: solid;
     text-align: center;
 }
 
-.dayImage {
-    max-width: 90%;
-    margin: 3%;
+.dayHeader {
+    margin-top: 2%;
+    margin-bottom: 2%;
+    font-size: 2em;
 }
 
-.hour {
-    height: 40px;
-    width: 40px;
-    border-width: 10px;
-    border-color: black;
-    border-style: solid;
+.dayRainDiv {
+    display: flex; 
+    padding-left: 20%;
+    margin-top: 10%;
+}
+
+.dayRainImage {
+    max-width: 30%;
+    margin-right: 5%;
+    margin-bottom: 0%;
+}
+
+.dayRainText {
+    margin: 0%;
+    padding-top: 4%;
+    font-size: 1.5em;
+}
+
+#highLowContainer {
+    max-width: fit-content;
+}
+
+.high {
+    font-size: 2em;
+    margin-top: 5%;
+    margin-bottom: 0%;
+}
+
+.low {
+    color: grey;
+    font-size: 2em;
+    margin-top: 0%;
+    margin-bottom: 0%;
 }

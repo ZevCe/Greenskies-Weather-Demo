@@ -1,99 +1,316 @@
 <!DOCTYPE html> 
 <html> 
-      
+    
+<!--stretch goal, refactor using shadow dom-->
+
+<!--standard boilerplate stuff-->
 <head> 
-    <!-- typical boilerplate stuff -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <link rel="stylesheet" type="text/css" href="style.css"> 
     <script src="main.js"></script> 
 </head>
 
+<!--start of the interesting stuff-->
 <body>
 
-    <div id="search"> 
-        <p>Enter City</p>
-        <input id="zipInput"> </input> 
-        <br>
-        <button onclick="findZip();"> Submit </button>
+
+    <!--search box at top of screen which always stays present-->
+    <div style="text-align: center;">
+        <p class="sectionHeader">Enter a zip code to get a weather report!</p>
+        <input style="height: 2em;" id="zipInput"></input>
+        <button style="height: 2.5em;" onclick="findZip();">Submit</button>
     </div>
 
+    <!--empty div to create space between search bar and hourly report-->
+    <div class="spacer"></div>
+
+    <!--all of the data that gets displayed once a user enters a zipcode-->
     <div id="result">
 
-        <!--headers displaying each day of the week-->
+        <!--A header telling the user this is the hourly forecast-->
+        <div class="sectionHeader">Hourly Forecast</div>
+
+        <!--boxes displaying info for hourly forecast-->
         <div class="row"> 
-            <div id="dayHeader1"></div>
-            <div id="dayHeader2" class="dayHeader"></div>
-            <div id="dayHeader3" class="dayHeader"></div>
-            <div id="dayHeader4" class="dayHeader"></div>
-            <div id="dayHeader5" class="dayHeader"></div>
-            <div id="dayHeader6" class="dayHeader"></div>
-            <div id="dayHeader7"></div>
+            <div id="hourData1" class="hourData">
+                <p class="hourHeader">10am</p>
+                <hr noshade="true" color="black"/>
+                <img src="assets/cloudy.png" class="containerImage">
+                
+                <div class="hourWindDiv">
+                    <img src="assets/windSpeed.png" class="hourWindImage">
+                    <p class="hourWindText">10 mph</p>
+                </div>
+
+                <p class="hourTemp">72&deg;</p>
+            </div>
+
+            <div id="hourData2" class="hourData">
+                <p class="hourHeader">10am</p>
+                <hr noshade="true" color="black"/>
+                <img src="assets/cloudy.png" class="containerImage">
+                
+                <div class="hourWindDiv">
+                    <img src="assets/windSpeed.png" class="hourWindImage">
+                    <p class="hourWindText">10 mph</p>
+                </div>
+
+                <p class="hourTemp">72&deg;</p>
+            </div>
+
+            <div id="hourData3" class="hourData">
+                <p class="hourHeader">10am</p>
+                <hr noshade="true" color="black"/>
+                <img src="assets/cloudy.png" class="containerImage">
+                                
+                <div class="hourWindDiv">
+                    <img src="assets/windSpeed.png" class="hourWindImage">
+                    <p class="hourWindText">10 mph</p>
+                </div>
+
+                <p class="hourTemp">72&deg;</p>
+            </div>
+
+            <div id="hourData4" class="hourData">
+                <p class="hourHeader">10am</p>
+                <hr noshade="true" color="black"/>
+                <img src="assets/cloudy.png" class="containerImage">
+                                
+                <div class="hourWindDiv">
+                    <img src="assets/windSpeed.png" class="hourWindImage">
+                    <p class="hourWindText">10 mph</p>
+                </div>
+
+                <p class="hourTemp">72&deg;</p>
+            </div>
+
+            <div id="hourData5" class="hourData">
+                <p class="hourHeader">10am</p>
+                <hr noshade="true" color="black"/>
+                <img src="assets/cloudy.png" class="containerImage">
+                                
+                <div class="hourWindDiv">
+                    <img src="assets/windSpeed.png" class="hourWindImage">
+                    <p class="hourWindText">10 mph</p>
+                </div>
+
+                <p class="hourTemp">72&deg;</p>
+            </div>
+
+            <div id="hourData6" class="hourData">
+                <p class="hourHeader">10am</p>
+                <hr noshade="true" color="black"/>
+                <img src="assets/cloudy.png" class="containerImage">
+                                
+                <div class="hourWindDiv">
+                    <img src="assets/windSpeed.png" class="hourWindImage">
+                    <p class="hourWindText">10 mph</p>
+                </div>
+
+                <p class="hourTemp">72&deg;</p>
+            </div>
+
+            <div id="hourData7" class="hourData">
+                <p class="hourHeader">10am</p>
+                <hr noshade="true" color="black"/>
+                <img src="assets/cloudy.png" class="containerImage">
+                                
+                <div class="hourWindDiv">
+                    <img src="assets/windSpeed.png" class="hourWindImage">
+                    <p class="hourWindText">10 mph</p>
+                </div>
+
+                <p class="hourTemp">72&deg;</p>
+            </div>
+
+            <div id="hourData8" class="hourData">
+                <p class="hourHeader">10am</p>
+                <hr noshade="true" color="black"/>
+                <img src="assets/cloudy.png" class="containerImage">
+                                
+                <div class="hourWindDiv">
+                    <img src="assets/windSpeed.png" class="hourWindImage">
+                    <p class="hourWindText">10 mph</p>
+                </div>
+
+                <p class="hourTemp">72&deg;</p>
+            </div>
+
+            <div id="hourData9" class="hourData">
+                <p class="hourHeader">10am</p>
+                <hr noshade="true" color="black"/>
+                <img src="assets/cloudy.png" class="containerImage">
+                                
+                <div class="hourWindDiv">
+                    <img src="assets/windSpeed.png" class="hourWindImage">
+                    <p class="hourWindText">10 mph</p>
+                </div>
+
+                <p class="hourTemp">72&deg;</p>
+            </div>
+            
+            <div id="hourData10" class="hourData">
+                <p class="hourHeader">10am</p>
+                <hr noshade="true" color="black"/>
+                <img src="assets/cloudy.png" class="containerImage">
+                                
+                <div class="hourWindDiv">
+                    <img src="assets/windSpeed.png" class="hourWindImage">
+                    <p class="hourWindText">10 mph</p>
+                </div>
+
+                <p class="hourTemp">72&deg;</p>
+            </div>
+            
+            <div id="hourData11" class="hourData">
+                <p class="hourHeader">10am</p>
+                <hr noshade="true" color="black"/>
+                <img src="assets/cloudy.png" class="containerImage">
+                                
+                <div class="hourWindDiv">
+                    <img src="assets/windSpeed.png" class="hourWindImage">
+                    <p class="hourWindText">10 mph</p>
+                </div>
+
+                <p class="hourTemp">72&deg;</p>
+            </div>
+            
+            <div id="hourData12">
+                <p class="hourHeader">10am</p>
+                <hr noshade="true" color="black"/>
+                <img src="assets/cloudy.png" class="containerImage">
+                                
+                <div class="hourWindDiv">
+                    <img src="assets/windSpeed.png" class="hourWindImage">
+                    <p class="hourWindText">10 mph</p>
+                </div>
+
+                <p class="hourTemp">72&deg;</p>
+            </div>
         </div>
 
-        <!--boxes displaying temps and conditions-->
+        <!--empty div to create space between hourly and weekly report-->
+        <div class="spacer"></div>
+
+        <!--A header telling the user this is the weekly forecast-->
+        <div class="sectionHeader">Weekly Forecast</div>
+
+        <!--boxes displaying overview for each day of the week-->
         <div class="row"> 
-            <div id="dayData1"> 
-                <img src="./assets/sunny.png" class="dayImage">
-                <br>
-                <div class="row"><p class="high"></p> <p class="low"></p></div>
+            <div id="dayData1" class="dayData"> 
+                <p class="dayHeader"></p>
+                <hr noshade="true" color="black"/>
+                <img src="./assets/sunny.png" class="containerImage">
+                
+                <div class="dayRainDiv">
+                    <img src="assets/rainChance.png" class="dayRainImage">
+                    <p class="dayRainText">30%</p>
+                </div>
+                
+                <div class="highLowContainer">
+                    <p class="high">H: 80&deg;</p> 
+                    <p class="low">L: 69&deg;</p>
+                </div>
+
             </div>
             
             <div id="dayData2" class="dayData"> 
-                <img src="./assets/sunny.png" class="dayImage"> 
-                <br>
-                <h1>72</h1>
+                <p class="dayHeader"></p>
+                <hr noshade="true" color="black"/>
+                <img src="./assets/sunny.png" class="containerImage"> 
+                
+                <div class="dayRainDiv">
+                    <img src="assets/rainChance.png" class="dayRainImage">
+                    <p class="dayRainText">30%</p>
+                </div>
+                
+                <div class="highLowContainer">
+                    <p class="high">H: 80&deg;</p> 
+                    <p class="low">L: 69&deg;</p>
+                </div>
             </div>
             
             <div id="dayData3" class="dayData"> 
-                <img src="./assets/sunny.png" class="dayImage"> 
-                <br>
-                <h1>72</h1>
+                <p class="dayHeader"></p>
+                <hr noshade="true" color="black"/>
+                <img src="./assets/sunny.png" class="containerImage"> 
+                
+                <div class="dayRainDiv">
+                    <img src="assets/rainChance.png" class="dayRainImage">
+                    <p class="dayRainText">30%</p>
+                </div>
+                
+                <div class="highLowContainer">
+                    <p class="high">H: 80&deg;</p> 
+                    <p class="low">L: 69&deg;</p>
+                </div>
             </div>
             
             <div id="dayData4" class="dayData"> 
-                <img src="./assets/sunny.png" class="dayImage"> 
-                <br>
-                <h1>72</h1>
+                <p class="dayHeader"></p>
+                <hr noshade="true" color="black"/>
+                <img src="./assets/sunny.png" class="containerImage"> 
+                
+                <div class="dayRainDiv">
+                    <img src="assets/rainChance.png" class="dayRainImage">
+                    <p class="dayRainText">30%</p>
+                </div>
+                
+                <div class="highLowContainer">
+                    <p class="high">H: 80&deg;</p> 
+                    <p class="low">L: 69&deg;</p>
+                </div>
             </div>
             
             <div id="dayData5" class="dayData"> 
-                <img src="./assets/sunny.png" class="dayImage"> 
-                <br>
-                <h1>72</h1>
+                <p class="dayHeader"></p>
+                <hr noshade="true" color="black"/>
+                <img src="./assets/sunny.png" class="containerImage"> 
+                
+                <div class="dayRainDiv">
+                    <img src="assets/rainChance.png" class="dayRainImage">
+                    <p class="dayRainText">30%</p>
+                </div>
+                
+                <div class="highLowContainer">
+                    <p class="high">H: 80&deg;</p> 
+                    <p class="low">L: 69&deg;</p>
+                </div>
             </div>
             
             <div id="dayData6" class="dayData"> 
-                <img src="./assets/sunny.png" class="dayImage"> 
-                <br>
-                <h1>72</h1>
+                <p class="dayHeader"></p>
+                <hr noshade="true" color="black"/>
+                <img src="./assets/sunny.png" class="containerImage"> 
+                
+                <div class="dayRainDiv">
+                    <img src="assets/rainChance.png" class="dayRainImage">
+                    <p class="dayRainText">30%</p>
+                </div>
+                
+                <div class="highLowContainer">
+                    <p class="high">H: 80&deg;</p> 
+                    <p class="low">L: 69&deg;</p>
+                </div>
             </div>
             
             <div id="dayData7"> 
-                <img src="./assets/sunny.png" class="dayImage"> 
-                <br>
-                <h1>72</h1>
+                <p class="dayHeader"></p>
+                <hr noshade="true" color="black"/>
+                <img src="./assets/sunny.png" class="containerImage"> 
+                
+                <div class="dayRainDiv">
+                    <img src="assets/rainChance.png" class="dayRainImage">
+                    <p class="dayRainText">30%</p>
+                </div>
+                
+                <div class="highLowContainer">
+                    <p class="high">H: 80&deg;</p> 
+                    <p class="low">L: 69&deg;</p>
+                </div>
             </div>
         </div>
 
-
     </div>
-
-
-    <!--
-    <div class="row">
-        <div class="hour"> a</div>
-        <div class="hour"> a</div>
-        <div class="hour">a </div>
-        <div class="hour"> a</div>
-        <div class="hour"> a</div>
-        <div class="hour">a </div>
-        <div class="hour">a </div>
-        <div class="hour">a </div>
-        <div class="hour"> a</div>
-        <div class="hour">a </div>
-        <div class="hour">a </div>
-        <div class="hour"> a</div>
-    </div>
-    -->
 
 </body>
