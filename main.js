@@ -99,3 +99,55 @@ function updateDisplay() {
         header.innerHTML = days[dayIndex];
     }
 }
+
+let isImperial = true;
+
+function setUnit(input) {
+    if(input == "metric" && !isImperial) return;
+    if(input == "imperial" && isImperial) return;
+    isImperial = !isImperial;
+
+    //iterating through our hour displays
+    for(let i = 1; i < 13; i++) {
+
+        //accessing the element
+        let hourInfo = document.getElementById("hourData" + i);
+
+        let hourTemp = hourInfo.getElementsByClassName("hourTemp")[0];
+
+        let degree = Number(hourTemp.innerHTML.slice(0, hourTemp.innerHTML.length-1));
+
+        if(isImperial) hourTemp.innerHTML = Math.round((degree * (9/5)) + 32) + "\u00B0";
+        else hourTemp.innerHTML = Math.round((degree - 32) * (5/9)) + "\u00B0";
+
+
+        //da other ones
+        let windSpeed = hourInfo.getElementsByClassName("hourWindDiv")[0].getElementsByClassName("hourWindText")[0];
+        let num = Number(windSpeed.innerHTML.slice(0, windSpeed.innerHTML.length-3));
+
+        if(isImperial) windSpeed.innerHTML = Math.round(num/1.609) + " mph";
+        else windSpeed.innerHTML = Math.round(num * 1.609) + " kph";
+    }
+
+    //iterating through our day display
+    for(let i = 1; i < 8; i++) {
+        //accessing the element
+        let dayInfo = document.getElementById("dayData" + i);
+
+        let highLowContainer = dayInfo.getElementsByClassName("highLowContainer")[0];
+
+        let high = highLowContainer.getElementsByClassName("high")[0];
+
+        let degree = Number(high.innerHTML.slice(2, high.innerHTML.length-1));
+
+        if(isImperial) high.innerHTML = "H: " + Math.round((degree * (9/5)) + 32) + "\u00B0";
+        else high.innerHTML = "H: " + Math.round((degree - 32) * (5/9)) + "\u00B0"; 
+
+        let low = highLowContainer.getElementsByClassName("low")[0];
+
+        degree = Number(low.innerHTML.slice(2, low.innerHTML.length-1));
+
+        if(isImperial) low.innerHTML = "L: " + Math.round((degree * (9/5)) + 32) + "\u00B0";
+        else low.innerHTML = "L: " + Math.round((degree - 32) * (5/9)) + "\u00B0";
+    }
+}
