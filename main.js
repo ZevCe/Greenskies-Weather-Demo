@@ -110,12 +110,12 @@ function updateDisplay(results) {
 
         //accessing and updating the icon
         let hourIcon = hourInfo.getElementsByClassName("containerImage")[0];
-        updateIcon(hourIcon, results.days[0].hours[i-1].conditions);
+        updateIcon(hourIcon, results.days[0].hours[hourIndex].conditions);
 
         //accessing the wind speed html element
         let windSpeedElement = hourInfo.getElementsByClassName("hourWindDiv")[0].getElementsByClassName("hourWindText")[0];
         //grabbing the windspeed from the json object
-        let windSpeedNumber = results.days[0].hours[i-1].windspeed;
+        let windSpeedNumber = results.days[0].hours[hourIndex].windspeed;
         //checking for imperial/metric and updating the element  
         if(isImperial) windSpeedElement.innerHTML = Math.round(windSpeedNumber) + " mph";
         else windSpeedElement.innerHTML = convertToKPH(windSpeedNumber) + " kph";
@@ -123,7 +123,7 @@ function updateDisplay(results) {
         //accessing the temperature html element and updating temp checking for imperial/metric
         let temperatureElement = hourInfo.getElementsByClassName("hourTemp")[0];
         //grabbing the temperature from the json object
-        let temperatureNumber = results.days[0].hours[i-1].temp;
+        let temperatureNumber = results.days[0].hours[hourIndex].temp;
         //checking for imperial/metric and updating the element
         if(isImperial) temperatureElement.innerHTML = Math.round(temperatureNumber) + "\u00B0";
         else temperatureElement.innerHTML = convertToCelcius(temperatureNumber) + "\u00B0";

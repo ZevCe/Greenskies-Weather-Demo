@@ -1,5 +1,5 @@
 hr {
-    height: .20em;
+    height: .5vh;
 }
 
 .row {
@@ -14,13 +14,13 @@ hr {
 .sectionHeader {
     margin-top: 1%;
     text-align: center;
-    font-size: 2em;
+    font-size: 5vh;
 }
 
 .errorDiv {
     display: none;
     text-align: center;
-    font-size: 1.25em;
+    font-size: 3vh;
     color: #cc0000;
 }
 
@@ -39,8 +39,8 @@ hr {
 
 .hourData {
     width: 8%;
-    border-width: .25em;
-    border-right: 0em;
+    border-width: .5vh;
+    border-right: 0;
     border-color: black;
     border-style: solid;
     text-align: center;
@@ -48,7 +48,7 @@ hr {
 
 #hourData12 {
     width: 8%;
-    border-width: .25em;
+    border-width: .5vh;
     border-color: black;
     border-style: solid;
     text-align: center;
@@ -57,7 +57,7 @@ hr {
 .hourHeader {
     margin: 0%; 
     margin-top: 5%;
-    font-size: 1.25em; 
+    font-size: 3vh; 
 }
 
 .hourWindDiv {
@@ -80,13 +80,13 @@ hr {
     margin: 0%;
     margin-top: 0%;
     margin-bottom: 5%; 
-    font-size: 1.5em; 
+    font-size: 3vh; 
 }
 
 .dayData {
     width: 14%;
-    border: .25em;
-    border-right: 0em;
+    border: .5vh;
+    border-right: 0;
     border-color: black;
     border-style: solid;
     text-align: center;
@@ -94,7 +94,7 @@ hr {
 
 #dayData7 {
     width: 14%;
-    border: .25em;
+    border: .5vh;
     border-color: black;
     border-style: solid;
     text-align: center;
@@ -103,7 +103,7 @@ hr {
 .dayHeader {
     margin-top: 2%;
     margin-bottom: 2%;
-    font-size: 2em;
+    font-size: 4vh;
 }
 
 .dayRainDiv {
@@ -120,8 +120,8 @@ hr {
 
 .dayRainText {
     margin: 0%;
-    padding-top: 4%;
-    font-size: 1.5em;
+    padding-top: 5%;
+    font-size: 3.25vh;
 }
 
 #highLowContainer {
@@ -129,14 +129,14 @@ hr {
 }
 
 .high {
-    font-size: 2em;
+    font-size: 4vh;
     margin-top: 5%;
     margin-bottom: 0%;
 }
 
 .low {
     color: grey;
-    font-size: 2em;
+    font-size: 4vh;
     margin-top: 0%;
     margin-bottom: 0%;
 }
