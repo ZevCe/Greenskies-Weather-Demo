@@ -14,9 +14,17 @@
 <body>
 
     <!--basic user settings-->
-    <div style="margin-top: 0%; text-align: right;"> 
-        <button id="imperial" onclick="setUnit(this.id)">Imperial</button>
-        <button id="metric" onclick="setUnit(this.id)">Metric</button>
+    <div id="settings"> 
+
+        <!--inputs for toggling hourly and weekly forecasts-->
+        <button id="hourlyToggle" class="forecastToggle" onclick="toggleHourly();">Show/Hide Hourly Forecast</button>
+        <button id="weeklyToggle" class="forecastToggle" onclick="toggleWeekly();">Show/Hide Weekly Forecast</button>
+
+        <!--inputs for switching unit system-->
+        <input name="unitSettings" type="radio" id="imperial" onclick="setImperial();" checked="true"/>
+        <label for="imperial">Imperial</label>
+        <input name="unitSettings" type="radio" id="metric" onclick="setMetric();"/>
+        <label for="metric">Metric</label>
     </div>
 
 
@@ -25,19 +33,18 @@
         <p class="sectionHeader">Enter a zip code to get a weather report!</p>
         <input style="height: 2em;" id="zipInput"></input>
         <button style="height: 2.5em;" onclick="findZip();">Submit</button>
+        <div id="zipError" class="errorDiv">Zip code must be in the format of 00000</div>
+        <div id="apiError" class="errorDiv">No location found for given zip code!</div>
     </div>
-
-    <!--empty div to create space between search bar and hourly report-->
-    <div class="spacer"></div>
 
     <!--all of the data that gets displayed once a user enters a zipcode-->
     <div id="result">
 
         <!--A header telling the user this is the hourly forecast-->
-        <div class="sectionHeader">Hourly Forecast</div>
+        <div id="hourlyForecastHeader" class="sectionHeader">Hourly Forecast</div>
 
         <!--boxes displaying info for hourly forecast-->
-        <div class="row"> 
+        <div id="hourlyForecastBox" class="row"> 
             <div id="hourData1" class="hourData">
                 <p class="hourHeader">10am</p>
                 <hr noshade="true" color="black"/>
@@ -195,14 +202,11 @@
             </div>
         </div>
 
-        <!--empty div to create space between hourly and weekly report-->
-        <div class="spacer"></div>
-
         <!--A header telling the user this is the weekly forecast-->
-        <div class="sectionHeader">Weekly Forecast</div>
+        <div id="weeklyForecastHeader" class="sectionHeader">Weekly Forecast</div>
 
         <!--boxes displaying overview for each day of the week-->
-        <div class="row"> 
+        <div id="weeklyForecastBox" class="row"> 
             <div id="dayData1" class="dayData"> 
                 <p class="dayHeader"></p>
                 <hr noshade="true" color="black"/>

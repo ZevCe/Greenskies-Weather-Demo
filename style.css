@@ -12,16 +12,29 @@ hr {
 }
 
 .sectionHeader {
+    margin-top: 1%;
     text-align: center;
     font-size: 2em;
 }
 
-.spacer {
-    margin: 3%;
+.errorDiv {
+    display: none;
+    text-align: center;
+    font-size: 1.25em;
+    color: #cc0000;
+}
+
+.forecastToggle {
+    display: none;
 }
 
 #result {
     display: none;
+}
+
+#settings {
+    margin-top: 0%; 
+    text-align: right;
 }
 
 .hourData {
