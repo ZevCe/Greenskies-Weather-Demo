@@ -156,13 +156,19 @@ function updateDisplay() {
     let currentDate = new Date();
 
     //getting timezone offset for when searching in places outside of your timezone
-    //working on the assumption that user is only going to be searching for locations
-    //within the US and abusing the fact that .getTimezoneOffset returns an absolute value
-    //while the timezone offset stored in the JSON file returns a negative number for America
+    //working on the assumption that user is only going to be using a device with a
+    //US timezone and abusing the fact that .getTimezoneOffset returns an absolute value
+    //while the timezone offset stored in the JSON file returns an actual positive/negative
     let tzOffset = results.tzoffset + (currentDate.getTimezoneOffset()/60);
 
-    //finding out current hour (in time of search results)
+    //finding out the current hour for the place being looked up
     let currentHour = currentDate.getHours() + Number(tzOffset);
+
+    //if you are on east coast and checking west coast weather at 1am or
+    //if you are on west coast checking east coast weather at 11pm
+    //can cause issues with out of bound indexs
+    if(currentHour < 0) currentHour += 24;
+    if(currentHour > 23) currentHour -= 24;
 
     //figuring out how many hours until sunset
     let sunsetOffset = Number(results.days[0].sunset.slice(0, 2)) - currentHour;
@@ -178,8 +184,8 @@ function updateDisplay() {
     else sunriseOffset = todaySunrise - currentHour;
 
     //creating an array of hours to reference for our headers
-    let hours = ["1am", "2am", "3am", "4am", "5am", "6am", "7am", "8am", "9am", "10am", "11am", "12pm",
-                "1pm", "2pm", "3pm", "4pm", "5pm", "6pm", "7pm", "8pm", "9pm", "10pm", "11pm", "12am"];
+    let hours = ["12am", "1am", "2am", "3am", "4am", "5am", "6am", "7am", "8am", "9am", "10am", "11am", 
+                "12pm", "1pm", "2pm", "3pm", "4pm", "5pm", "6pm", "7pm", "8pm", "9pm", "10pm", "11pm"];
 
     //iterating through our hour displays
     for(let i = 1; i < 13; i++) {
@@ -190,11 +196,13 @@ function updateDisplay() {
         //accessing the header
         let header = hourInfo.getElementsByClassName("hourHeader")[0];
 
-        //figuring out what hour the header should display
-        let hourIndex = (currentHour + i-2)%24;
-        //idk if necessary, but worried about negative indexing
-        //as I don't understand why I use -2 instead of -1 (-2 does give correct result)
-        if(hourIndex == -1) hourIndex = 23;
+        //figuring out what hour the header should display and whether we are in today or tomorrow
+        let hourIndex = currentHour + i-1;
+        let dayIndex = 0;
+        if(hourIndex > 23) {
+            dayIndex = 1;
+            hourIndex -= 24;
+        }
 
         //updating our header
         header.innerHTML = hours[hourIndex];
@@ -202,12 +210,12 @@ function updateDisplay() {
         //accessing and updating the icon
         let hourIcon = hourInfo.getElementsByClassName("containerImage")[0];
         //bool in third parameter checks if the current hour is after sunset
-        updateIcon(hourIcon, results.days[0].hours[hourIndex + 1].conditions, (i-1 >= sunsetOffset && i-1 < sunriseOffset));
+        updateIcon(hourIcon, results.days[dayIndex].hours[hourIndex].conditions, (i-1 >= sunsetOffset && i-1 < sunriseOffset));
 
         //accessing the wind speed html element
         let windSpeedElement = hourInfo.getElementsByClassName("hourWindDiv")[0].getElementsByClassName("hourWindText")[0];
         //grabbing the windspeed from the json object
-        let windSpeedNumber = results.days[0].hours[hourIndex].windspeed;
+        let windSpeedNumber = results.days[dayIndex].hours[hourIndex].windspeed;
         //checking for imperial/metric and updating the element  
         if(isImperial) windSpeedElement.innerHTML = Math.round(windSpeedNumber) + " mph";
         else windSpeedElement.innerHTML = convertToKPH(windSpeedNumber) + " kph";
@@ -215,7 +223,7 @@ function updateDisplay() {
         //accessing the temperature html element
         let temperatureElement = hourInfo.getElementsByClassName("hourTemp")[0];
         //grabbing the temperature from the json object
-        let temperatureNumber = results.days[0].hours[hourIndex].temp;
+        let temperatureNumber = results.days[dayIndex].hours[hourIndex].temp;
         //checking for imperial/metric and updating the element
         if(isImperial) temperatureElement.innerHTML = Math.round(temperatureNumber) + "\u00B0";
         else temperatureElement.innerHTML = convertToCelcius(temperatureNumber) + "\u00B0";
@@ -311,13 +319,19 @@ function toggleHourly() {
     }
 }
 
+//variable to keep track of weather weekly forecast should be displayed
 let showWeekly = true;
+
+//function for toggling weekly forecast
 function toggleWeekly() {
+    //updating our variable
     showWeekly = !showWeekly;
 
+    //grabbing the elements related to hourly forecasts
     let weeklyForecastHeader = document.getElementById("weeklyForecastHeader");
     let weeklyForecastBox = document.getElementById("weeklyForecastBox");
 
+    //showing and hiding the elements as appropriate
     if(showWeekly) {
         weeklyForecastHeader.style.display = "block";
         weeklyForecastBox.style.display = "flex";
