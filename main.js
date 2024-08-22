@@ -65,14 +65,23 @@ function setResultDivs(status) {
 
 //helper function for updating the icons in our display
 //need to add parameters to check for nighttime at somepoint
-function updateIcon(element, conditions) {
+function updateIcon(element, conditions, isNighttime) {
     //if else statement for determinging which icon to use
     //would be a switch case but we aren't looking for exact matching
     if(conditions.includes("Rain")) element.src = "./assets/rainy.png";
     else if(conditions.includes("Overcast")) element.src = "./assets/cloudy.png";
-    else if(conditions.includes("Partially cloudy")) element.src = "./assets/partlyCloudy.png";
-    else if(conditions.includes("Clear")) element.src = "./assets/sunny.png";
-    else {element.src = "./assets/snowy.png"; console.log(conditions);}
+    else if(conditions.includes("Partially cloudy")) {
+        if(isNighttime) element.src = "./assets/partlyCloudyNight.png";
+        else element.src = "./assets/partlyCloudy.png";
+    }
+    else if(conditions.includes("Clear")) {
+        if(isNighttime) element.src = "./assets/nighty.png"
+        else element.src = "./assets/sunny.png";
+    }
+    else {
+        element.src = "./assets/snowy.png";
+        console.log(conditions);
+    }
 }
 
 //updating all the elements of our display based on weather data returned from an api call
@@ -85,6 +94,9 @@ function updateDisplay(results) {
 
     //finding out current hour
     let currentHour = currentDate.getHours();
+
+    //figuring out how many hours until sunset
+    let sunsetOffset = Number(results.days[0].sunset.slice(0, 2)) - currentHour;
 
     //creating an array of hours to reference with our headers
     let hours = ["1am", "2am", "3am", "4am", "5am", "6am", "7am", "8am", "9am", "10am", "11am", "12pm",
@@ -110,7 +122,7 @@ function updateDisplay(results) {
 
         //accessing and updating the icon
         let hourIcon = hourInfo.getElementsByClassName("containerImage")[0];
-        updateIcon(hourIcon, results.days[0].hours[hourIndex].conditions);
+        updateIcon(hourIcon, results.days[0].hours[hourIndex].conditions, (i-1 >= sunsetOffset));
 
         //accessing the wind speed html element
         let windSpeedElement = hourInfo.getElementsByClassName("hourWindDiv")[0].getElementsByClassName("hourWindText")[0];
@@ -146,7 +158,7 @@ function updateDisplay(results) {
 
         //accessing and updating the icon
         let dayWeatherIcon = dayInfo.getElementsByClassName("containerImage")[0];
-        updateIcon(dayWeatherIcon, results.days[i-1].conditions);
+        updateIcon(dayWeatherIcon, results.days[i-1].conditions, (i == 1 && sunsetOffset <= 0));
 
         //accessing and updating the rain chance text
         let rainChanceText = dayInfo.getElementsByClassName("dayRainDiv")[0].getElementsByClassName("dayRainText")[0];
