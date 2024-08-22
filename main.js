@@ -5,6 +5,44 @@ function convertToKPH(num) {return Math.round(num * 1.609);}
 //global variable to keep track of our loaded json
 let results = null;
 
+function findCityState() {
+
+    //grabbing city text
+    let city = document.getElementById("cityInput").value.trim();
+
+    //grabbing state text
+    let state = document.getElementById("stateInput").value.trim();
+
+    //verifying user has entered input for both city and state
+    if(city == "" || state == "") {
+        setResultDivs("cityStateError");
+        return;
+    }
+
+    //verifying user has entered a valid state
+    let validStates = ["alabama","alaska","arizona","arkansas","california","colorado","connecticut",
+    "delaware","florida","georgia","hawaii","idaho","illinois","indiana","iowa","kansas","kentucky",
+    "louisiana","maine","maryland","massachusetts","michigan","minnesota","mississippi","missouri", 
+    "montana","nebraska","nevada","new hampshire","new jersey","new mexico","new york","north carolina",
+    "north dakota","ohio","oklahoma","oregon","pennsylvania","rhode island","south carolina","south dakota",
+    "tennessee","texas","utah","vermont","virginia","washington","west virginia","wisconsin","wyoming"]; 
+    
+    let validAbbreviations = ['AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN','IA','KS',
+    'KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','OH','OK','OR',
+    'PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY'];
+
+    if(!validStates.includes(state.toLowerCase()) && !validAbbreviations.includes(state.toUpperCase())) {
+        setResultDivs("stateError");
+        return;
+    }
+
+
+    //creating our request since we are using a free plan there is no need to hide the api key
+    let requestUrl = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/" + city + "," + state + "?key=BDYB2F43GCAVB8YW96AWX9SV7";
+    //making our apiCall
+    apiCall(requestUrl);
+}
+
 //grabs all weather data for a location based on a zip code
 function findZip() {
 
@@ -15,15 +53,18 @@ function findZip() {
         return;
     }
 
-    //creating our request, which for the scope of this app is the only request we will need
-    //since we are using a free plan there is no need to hide the api key
-    let requestUrl = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/" + zip + "?key=BDYB2F43GCAVB8YW96AWX9SV7"
+    //creating our request since we are using a free plan there is no need to hide the api key
+    let requestUrl = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/" + zip + "?key=BDYB2F43GCAVB8YW96AWX9SV7";
+    //making our apiCall
+    apiCall(requestUrl);
+}
 
+function apiCall(requestUrl) {
     //calling the api and getting our data
     fetch(requestUrl, {mode: 'cors'})
         .then(function(response) {
             //checking if api returns successfully
-            if (!response.ok) {setResultDivs("apiError");}
+            if (!response.ok) setResultDivs("apiError");
             else return response.json();
         })
         .then(function(response) {
@@ -44,6 +85,16 @@ function setResultDivs(status) {
     if(status == "zipError") zipErrorElement.style.display = "block";
     else zipErrorElement.style.display = "none";
 
+    //accessing cityStateErrorElement and determining if we need to show/hide
+    let cityStateErrorElement = document.getElementById("cityStateError");
+    if(status == "cityStateError") cityStateErrorElement.style.display = "block";
+    else cityStateErrorElement.style.display = "none";
+
+    //accessing stateErrorElement and determining if we need to show/hide
+    let stateErrorElement = document.getElementById("stateError");
+    if(status == "stateError") stateErrorElement.style.display = "block";
+    else stateErrorElement.style.display = "none";
+
     //accessing apiErrorElement and determining if we need to show/hide
     let apiErrorElement = document.getElementById("apiError");
     if(status == "apiError") apiErrorElement.style.display = "block";
@@ -57,6 +108,11 @@ function setResultDivs(status) {
         resultElement.style.display = "block";
         hourToggleElement.style.display = "flex";
         weekToggleElement.style.display = "flex";
+
+        //emptying our search fields upon success
+        document.getElementById("zipInput").value = "";
+        document.getElementById("cityInput").value = "";
+        document.getElementById("stateInput").value = "";
     }
     else {
         resultElement.style.display = "none";
@@ -74,7 +130,7 @@ function setImperial() {
     if(isImperial) return;
     isImperial = true;
 
-    //checking we have data loaded in before making call to update units
+    //checking we have data loaded in before making call to update display
     if(results != null) updateDisplay();
 }
 
@@ -84,14 +140,16 @@ function setMetric() {
     if(!isImperial) return;
     isImperial = false;
 
-    //checking we have data loaded in before making call to update units
+    //checking we have data loaded in before making call to update display
     if(results != null) updateDisplay();
 }
 
 
-//updating all the elements of our display based on weather data returned from an api call
-//need to check for imperial/metric
+//updating all the elements of our display using data currently stored in results variable
 function updateDisplay() {
+
+    //updating the address so user knows where data is being pulled from
+    document.getElementById("apiAddress").innerText = "Showing results for: " + results.resolvedAddress;
     
     //creating a date object that is... up to date
     //...I'm so funny please hire me...
@@ -103,7 +161,7 @@ function updateDisplay() {
     //figuring out how many hours until sunset
     let sunsetOffset = Number(results.days[0].sunset.slice(0, 2)) - currentHour;
 
-    //creating an array of hours to reference with our headers
+    //creating an array of hours to reference for our headers
     let hours = ["1am", "2am", "3am", "4am", "5am", "6am", "7am", "8am", "9am", "10am", "11am", "12pm",
                 "1pm", "2pm", "3pm", "4pm", "5pm", "6pm", "7pm", "8pm", "9pm", "10pm", "11pm", "12am"];
 
@@ -119,7 +177,7 @@ function updateDisplay() {
         //figuring out what hour the header should display
         let hourIndex = (currentHour + i-2)%24;
         //idk if necessary, but worried about negative indexing
-        //as I don't understand why I use -2 instead of -1
+        //as I don't understand why I use -2 instead of -1 (-2 does give correct result)
         if(hourIndex == -1) hourIndex = 23;
 
         //updating our header
@@ -127,6 +185,7 @@ function updateDisplay() {
 
         //accessing and updating the icon
         let hourIcon = hourInfo.getElementsByClassName("containerImage")[0];
+        //bool in third parameter checks if the current hour is after sunset
         updateIcon(hourIcon, results.days[0].hours[hourIndex].conditions, (i-1 >= sunsetOffset));
 
         //accessing the wind speed html element
@@ -137,7 +196,7 @@ function updateDisplay() {
         if(isImperial) windSpeedElement.innerHTML = Math.round(windSpeedNumber) + " mph";
         else windSpeedElement.innerHTML = convertToKPH(windSpeedNumber) + " kph";
 
-        //accessing the temperature html element and updating temp checking for imperial/metric
+        //accessing the temperature html element
         let temperatureElement = hourInfo.getElementsByClassName("hourTemp")[0];
         //grabbing the temperature from the json object
         let temperatureNumber = results.days[0].hours[hourIndex].temp;
@@ -149,7 +208,7 @@ function updateDisplay() {
     //finding out current day
     let currentDay = currentDate.getDay();
 
-    //creating an array of days to reference with our headers
+    //creating an array of days to reference for our headers
     let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
     //iterating through our day displays
@@ -163,6 +222,7 @@ function updateDisplay() {
 
         //accessing and updating the icon
         let dayWeatherIcon = dayInfo.getElementsByClassName("containerImage")[0];
+        //bool in third parameter checks if it is currently past sunset for the current day of the week
         updateIcon(dayWeatherIcon, results.days[i-1].conditions, (i == 1 && sunsetOffset <= 0));
 
         //accessing and updating the rain chance text
@@ -191,7 +251,6 @@ function updateDisplay() {
 }
 
 //helper function for updating the icons in our display
-//need to add parameters to check for nighttime at somepoint
 function updateIcon(element, conditions, isNighttime) {
     //if else statement for determinging which icon to use
     //would be a switch case but we aren't looking for exact matching
@@ -212,14 +271,19 @@ function updateIcon(element, conditions, isNighttime) {
     }
 }
 
-//two simple functions for toggling if forecasts are shown
+//variable to keep track of whether the hourly forecase should be displayed
 let showHourly = true;
+
+//function for toggling whether the hourly forecast is displayed
 function toggleHourly() {
+    //updating our variable
     showHourly = !showHourly;
 
+    //grabbing the elements related to hourly forecasts
     let hourlyForecastHeader = document.getElementById("hourlyForecastHeader");
     let hourlyForecastBox = document.getElementById("hourlyForecastBox");
 
+    //showing and hiding the elements as appropriate
     if(showHourly) {
         hourlyForecastHeader.style.display = "block";
         hourlyForecastBox.style.display = "flex";

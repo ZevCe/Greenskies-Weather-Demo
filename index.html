@@ -15,30 +15,57 @@
 
     <!--basic user settings-->
     <div id="settings"> 
-
-        <!--inputs for toggling hourly and weekly forecasts-->
-        <button id="hourlyToggle" class="forecastToggle" onclick="toggleHourly();">Show/Hide Hourly Forecast</button>
-        <button id="weeklyToggle" class="forecastToggle" onclick="toggleWeekly();">Show/Hide Weekly Forecast</button>
-
+        Measurement system: 
         <!--inputs for switching unit system-->
         <input name="unitSettings" type="radio" id="imperial" onclick="setImperial();" checked="true"/>
         <label for="imperial">Imperial</label>
         <input name="unitSettings" type="radio" id="metric" onclick="setMetric();"/>
         <label for="metric">Metric</label>
+
     </div>
 
 
     <!--search box at top of screen which always stays present-->
-    <div style="text-align: center;">
-        <p class="sectionHeader">Enter a zip code to get a weather report!</p>
-        <input style="height: 3.5vh;" id="zipInput"></input>
-        <button style="height: 4.5vh;" onclick="findZip();">Submit</button>
+    <div>
+        <p class="sectionHeader" style="padding-bottom: 0%; margin-bottom: 0%;">Zev's Weather Website</p>
+        
+        <div class="row">
+            <p class="sectionHeader" style="margin-left: 25%;">Search by Zip Code</p>
+            <p class="sectionHeader" style="margin-left: 15%; align-self: center;">Search by City + State</p>
+        </div>
+
+        <div class="row" style="font-size: 3vh; font-weight: bolder;">
+            <input style="height: 3.5vh; margin-left: 25%;" id="zipInput">
+            <button style="height: 4.5vh; margin-right: 7%;" onclick="findZip();">Submit</button>
+    
+            OR
+    
+            <label for="cityInput" style="font-size: 3vh; font-weight:400; margin-left: 5%;">City:</label>
+            <input style="height: 3.5vh;" id="cityInput">
+            <label for="stateInput" style="font-size: 3vh; font-weight:400; margin-left: 1%;">State:</label>
+            <input style="height: 3.5vh; max-width: 6vh;" id="stateInput">
+            <button onclick="findCityState();" style="height: 4.5vh;">Submit</button>
+        </div>
+
+
+        <!--divs for infomring the user when their input has an error-->
         <div id="zipError" class="errorDiv">Zip code must be in the format of 00000</div>
-        <div id="apiError" class="errorDiv">No location found for given zip code!</div>
+        <div id="cityStateError" class="errorDiv">Both city and state must be filled out!</div>
+        <div id="stateError" class="errorDiv">State not found! Tip: you can use the two letter abbreviation for the state</div>
+        <div id="apiError" class="errorDiv">No location found for given location!</div>
     </div>
 
     <!--all of the data that gets displayed once a user enters a zipcode-->
     <div id="result">
+
+        <!--telling the user where the api is pulling data from-->
+        <div id="apiAddress" class="sectionHeader">Wallingford, CT</div>
+        <!--inputs for toggling hourly and weekly forecasts-->
+        <div class="row">
+            <button id="hourlyToggle" class="forecastToggle" onclick="toggleHourly();" style="margin-left: 35%;">Show/Hide Hourly Forecast</button>
+            <button id="weeklyToggle" class="forecastToggle" onclick="toggleWeekly();">Show/Hide Weekly Forecast</button>
+        </div>
+        
 
         <!--A header telling the user this is the hourly forecast-->
         <div id="hourlyForecastHeader" class="sectionHeader">Hourly Forecast</div>
