@@ -155,11 +155,27 @@ function updateDisplay() {
     //...I'm so funny please hire me...
     let currentDate = new Date();
 
-    //finding out current hour
-    let currentHour = currentDate.getHours();
+    //getting timezone offset for when searching in places outside of your timezone
+    //working on the assumption that user is only going to be searching for locations
+    //within the US and abusing the fact that .getTimezoneOffset returns an absolute value
+    //while the timezone offset stored in the JSON file returns a negative number for America
+    let tzOffset = results.tzoffset + (currentDate.getTimezoneOffset()/60);
+
+    //finding out current hour (in time of search results)
+    let currentHour = currentDate.getHours() + Number(tzOffset);
 
     //figuring out how many hours until sunset
     let sunsetOffset = Number(results.days[0].sunset.slice(0, 2)) - currentHour;
+
+    //figuring out when sunrise today and tomorrow are
+    let todaySunrise = Number(results.days[0].sunrise.slice(0, 2));
+    let tomorrowSunrise = Number(results.days[1].sunrise.slice(0, 2));
+
+    //figuring out how many hours until the NEXT sunrise (could be either tomorrow or today)
+    let sunriseOffset = 0;
+    //checking if the sunrise has already happened today
+    if(todaySunrise - currentHour <= 0) sunriseOffset = (23 - currentHour) + tomorrowSunrise;
+    else sunriseOffset = todaySunrise - currentHour;
 
     //creating an array of hours to reference for our headers
     let hours = ["1am", "2am", "3am", "4am", "5am", "6am", "7am", "8am", "9am", "10am", "11am", "12pm",
@@ -186,7 +202,7 @@ function updateDisplay() {
         //accessing and updating the icon
         let hourIcon = hourInfo.getElementsByClassName("containerImage")[0];
         //bool in third parameter checks if the current hour is after sunset
-        updateIcon(hourIcon, results.days[0].hours[hourIndex].conditions, (i-1 >= sunsetOffset));
+        updateIcon(hourIcon, results.days[0].hours[hourIndex + 1].conditions, (i-1 >= sunsetOffset && i-1 < sunriseOffset));
 
         //accessing the wind speed html element
         let windSpeedElement = hourInfo.getElementsByClassName("hourWindDiv")[0].getElementsByClassName("hourWindText")[0];
