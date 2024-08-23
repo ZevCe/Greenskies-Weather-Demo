@@ -2,6 +2,11 @@
 function convertToCelcius(num) {return Math.round((num - 32) * (5/9));}
 function convertToKPH(num) {return Math.round(num * 1.609);}
 
+//function courtesy of SO for setting the timezone of a date object
+function convertTZ(date, tzString) {
+    return new Date((typeof date === "string" ? new Date(date) : date).toLocaleString("en-US", {timeZone: tzString}));   
+}
+
 //global variable to keep track of our loaded json
 let results = null;
 
@@ -151,24 +156,11 @@ function updateDisplay() {
     //updating the address so user knows where data is being pulled from
     document.getElementById("apiAddress").innerText = "Showing results for: " + results.resolvedAddress;
     
-    //creating a date object that is... up to date
-    //...I'm so funny please hire me...
-    let currentDate = new Date();
-
-    //getting timezone offset for when searching in places outside of your timezone
-    //working on the assumption that user is only going to be using a device with a
-    //US timezone and abusing the fact that .getTimezoneOffset returns an absolute value
-    //while the timezone offset stored in the JSON file returns an actual positive/negative
-    let tzOffset = results.tzoffset + (currentDate.getTimezoneOffset()/60);
+    //creating a date object set to the timezone of the location
+    let currentDate = convertTZ(new Date(), results.timezone);
 
     //finding out the current hour for the place being looked up
-    let currentHour = currentDate.getHours() + Number(tzOffset);
-
-    //if you are on east coast and checking west coast weather at 1am or
-    //if you are on west coast checking east coast weather at 11pm
-    //can cause issues with out of bound indexs
-    if(currentHour < 0) currentHour += 24;
-    if(currentHour > 23) currentHour -= 24;
+    let currentHour = currentDate.getHours();
 
     //figuring out how many hours until sunset
     let sunsetOffset = Number(results.days[0].sunset.slice(0, 2)) - currentHour;
