@@ -17,11 +17,50 @@ hr {
     font-size: 5vh;
 }
 
+#websiteTitle {
+    padding-bottom: 0%;
+    margin-bottom: 0%;
+}
+
+#weatherSearchBoxes {
+    font-size: 3vh; 
+    font-weight: bolder;
+}
+
 .errorDiv {
     display: none;
     text-align: center;
     font-size: 3vh;
     color: #cc0000;
+}
+
+.inputLabel {
+    font-size: 3vh; 
+    font-weight:400;
+}
+
+#zipInput {
+    margin-left: 23%;
+    height: 3.5vh; 
+    max-width: 10%;
+}
+
+#cityInput {
+    height: 3.5vh; 
+    max-width: 15%;
+}
+
+#stateInput {
+    height: 3.5vh; 
+    max-width: 5%;
+}
+
+.submitButton {
+    height: 4.5vh;
+}
+
+#stateInput {
+    max-width: 6vh;
 }
 
 .forecastToggle {
@@ -40,15 +79,6 @@ hr {
 }
 
 .hourData {
-    width: 8%;
-    border-width: .5vh;
-    border-right: 0;
-    border-color: black;
-    border-style: solid;
-    text-align: center;
-}
-
-#hourData12 {
     width: 8%;
     border-width: .5vh;
     border-color: black;
@@ -76,6 +106,7 @@ hr {
 
 .hourWindText {
     margin: 0%;
+    padding: 0%;
 }
 
 .hourTemp {
@@ -86,15 +117,6 @@ hr {
 }
 
 .dayData {
-    width: 14%;
-    border: .5vh;
-    border-right: 0;
-    border-color: black;
-    border-style: solid;
-    text-align: center;
-}
-
-#dayData7 {
     width: 14%;
     border: .5vh;
     border-color: black;

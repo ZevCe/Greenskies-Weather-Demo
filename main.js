@@ -179,17 +179,20 @@ function updateDisplay() {
     let hours = ["12am", "1am", "2am", "3am", "4am", "5am", "6am", "7am", "8am", "9am", "10am", "11am", 
                 "12pm", "1pm", "2pm", "3pm", "4pm", "5pm", "6pm", "7pm", "8pm", "9pm", "10pm", "11pm"];
 
+    //grabbing our hour elements
+    let hourElements = document.getElementsByClassName("hourData");
+
     //iterating through our hour displays
-    for(let i = 1; i < 13; i++) {
+    for(let i = 0; i < 12; i++) {
 
         //accessing the element
-        let hourInfo = document.getElementById("hourData" + i);
+        let hourInfo = hourElements[i];
 
         //accessing the header
         let header = hourInfo.getElementsByClassName("hourHeader")[0];
 
         //figuring out what hour the header should display and whether we are in today or tomorrow
-        let hourIndex = currentHour + i-1;
+        let hourIndex = currentHour + i;
         let dayIndex = 0;
         if(hourIndex > 23) {
             dayIndex = 1;
@@ -202,7 +205,7 @@ function updateDisplay() {
         //accessing and updating the icon
         let hourIcon = hourInfo.getElementsByClassName("containerImage")[0];
         //bool in third parameter checks if the current hour is after sunset
-        updateIcon(hourIcon, results.days[dayIndex].hours[hourIndex].conditions, (i-1 >= sunsetOffset && i-1 < sunriseOffset));
+        updateIcon(hourIcon, results.days[dayIndex].hours[hourIndex].conditions, (i >= sunsetOffset && i < sunriseOffset));
 
         //accessing the wind speed html element
         let windSpeedElement = hourInfo.getElementsByClassName("hourWindDiv")[0].getElementsByClassName("hourWindText")[0];
@@ -227,23 +230,28 @@ function updateDisplay() {
     //creating an array of days to reference for our headers
     let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
+    //grabbing our day elements
+    let dayElements = document.getElementsByClassName("dayData");
+
     //iterating through our day displays
-    for(let i = 1; i < 8; i++) {
+    for(let i = 0; i < 7; i++) {
         //accessing the element
-        let dayInfo = document.getElementById("dayData" + i);
+        let dayInfo = dayElements[i];
+        
+        console.log(dayInfo.innerHTML);
 
         //accessing and updating the header text
         let header = dayInfo.getElementsByClassName("dayHeader")[0];
-        header.innerHTML = days[(currentDay + i-1)%7];
+        header.innerHTML = days[(currentDay + i)%7];
 
         //accessing and updating the icon
         let dayWeatherIcon = dayInfo.getElementsByClassName("containerImage")[0];
         //bool in third parameter checks if it is currently past sunset for the current day of the week
-        updateIcon(dayWeatherIcon, results.days[i-1].conditions, (i == 1 && sunsetOffset <= 0));
+        updateIcon(dayWeatherIcon, results.days[i].conditions, (i == 0 && sunsetOffset <= 0));
 
         //accessing and updating the rain chance text
         let rainChanceText = dayInfo.getElementsByClassName("dayRainDiv")[0].getElementsByClassName("dayRainText")[0];
-        rainChanceText.innerHTML = results.days[i-1].precipprob + "%";
+        rainChanceText.innerHTML = results.days[i].precipprob + "%";
 
         //accessing the high/low temperature container
         let highLowContainer = dayInfo.getElementsByClassName("highLowContainer")[0];
@@ -251,7 +259,7 @@ function updateDisplay() {
         //accessing the high temp element
         let highElement = highLowContainer.getElementsByClassName("high")[0];
         //grabbing the high temp from the json object
-        let highNum = results.days[i-1].tempmax;
+        let highNum = results.days[i].tempmax;
         //checking for imperial/metric and updating the element
         if(isImperial) highElement.innerHTML = "H: " + Math.round(highNum) + "\u00B0";
         else highElement.innerHTML = "H: " + convertToCelcius(highNum) + "\u00B0";
@@ -259,7 +267,7 @@ function updateDisplay() {
         //accessing the low temp element
         let lowElement = highLowContainer.getElementsByClassName("low")[0];
         //grabbing the low temp from the json object
-        let lowNum = results.days[i-1].tempmin;
+        let lowNum = results.days[i].tempmin;
         //checking for imperial/metric and updating the element
         if(isImperial) lowElement.innerHTML = "L: " + Math.round(lowNum) + "\u00B0";
         else lowElement.innerHTML = "L: " + convertToCelcius(lowNum) + "\u00B0";

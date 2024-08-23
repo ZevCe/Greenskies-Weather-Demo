@@ -21,32 +21,32 @@
         <label for="imperial">Imperial</label>
         <input name="unitSettings" type="radio" id="metric" onclick="setMetric();"/>
         <label for="metric">Metric</label>
-
     </div>
 
 
     <!--search box at top of screen which is always visible-->
     <div>
-        <p class="sectionHeader" style="padding-bottom: 0%; margin-bottom: 0%;">Zev's Weather Website</p>
+        <p class="sectionHeader" id="websiteTitle">Zev's Weather Website</p>
         
+        <!--text telling the user what the search boxes are for-->
         <div class="row">
-            <p class="sectionHeader" style="margin-left: 25%;">Search by Zip Code</p>
-            <p class="sectionHeader" style="margin-left: 15%; align-self: center;">Search by City + State</p>
+            <p class="sectionHeader" style="margin-left: 23%;">Search by Zip Code</p>
+            <p class="sectionHeader" style="margin-left: 15%;">Search by City + State</p>
         </div>
 
-        <div class="row" style="font-size: 3vh; font-weight: bolder;">
-            <input style="height: 3.5vh; margin-left: 25%;" id="zipInput">
-            <button style="height: 4.5vh; margin-right: 7%;" onclick="findZip();">Submit</button>
+        <!--the search boxes themselves-->
+        <div class="row" id="weatherSearchBoxes">
+            <input id="zipInput">
+            <button class="submitButton" style="margin-right: 9%;" onclick="findZip();">Submit</button>
     
             OR
     
-            <label for="cityInput" style="font-size: 3vh; font-weight:400; margin-left: 5%;">City:</label>
-            <input style="height: 3.5vh;" id="cityInput">
-            <label for="stateInput" style="font-size: 3vh; font-weight:400; margin-left: 1%;">State:</label>
-            <input style="height: 3.5vh; max-width: 6vh;" id="stateInput">
-            <button onclick="findCityState();" style="height: 4.5vh;">Submit</button>
+            <label for="cityInput" class="inputLabel" style="margin-left: 6%;">City:</label>
+            <input id="cityInput">
+            <label for="stateInput" class="inputLabel" style="margin-left: 1%;">State:</label>
+            <input id="stateInput">
+            <button onclick="findCityState();" class="submitButton">Submit</button>
         </div>
-
 
         <!--divs for infomring the user when their input has an error-->
         <div id="zipError" class="errorDiv">Zip code must be in the format of 00000</div>
@@ -73,7 +73,8 @@
 
         <!--boxes displaying info for hourly forecast-->
         <div id="hourlyForecastBox" class="row"> 
-            <div id="hourData1" class="hourData">
+
+            <div class="hourData" style="border-right: 0vh;">
                 <p class="hourHeader">10am</p>
                 <hr noshade="true" color="black"/>
                 <img src="assets/cloudy.png" class="containerImage">
@@ -86,7 +87,7 @@
                 <p class="hourTemp">72&deg;</p>
             </div>
 
-            <div id="hourData2" class="hourData">
+            <div class="hourData" style="border-right: 0vh;">
                 <p class="hourHeader">10am</p>
                 <hr noshade="true" color="black"/>
                 <img src="assets/cloudy.png" class="containerImage">
@@ -99,7 +100,7 @@
                 <p class="hourTemp">72&deg;</p>
             </div>
 
-            <div id="hourData3" class="hourData">
+            <div class="hourData" style="border-right: 0vh;">
                 <p class="hourHeader">10am</p>
                 <hr noshade="true" color="black"/>
                 <img src="assets/cloudy.png" class="containerImage">
@@ -112,7 +113,7 @@
                 <p class="hourTemp">72&deg;</p>
             </div>
 
-            <div id="hourData4" class="hourData">
+            <div class="hourData" style="border-right: 0vh;">
                 <p class="hourHeader">10am</p>
                 <hr noshade="true" color="black"/>
                 <img src="assets/cloudy.png" class="containerImage">
@@ -125,7 +126,7 @@
                 <p class="hourTemp">72&deg;</p>
             </div>
 
-            <div id="hourData5" class="hourData">
+            <div class="hourData" style="border-right: 0vh;">
                 <p class="hourHeader">10am</p>
                 <hr noshade="true" color="black"/>
                 <img src="assets/cloudy.png" class="containerImage">
@@ -138,7 +139,7 @@
                 <p class="hourTemp">72&deg;</p>
             </div>
 
-            <div id="hourData6" class="hourData">
+            <div class="hourData" style="border-right: 0vh;">
                 <p class="hourHeader">10am</p>
                 <hr noshade="true" color="black"/>
                 <img src="assets/cloudy.png" class="containerImage">
@@ -151,7 +152,7 @@
                 <p class="hourTemp">72&deg;</p>
             </div>
 
-            <div id="hourData7" class="hourData">
+            <div class="hourData" style="border-right: 0vh;">
                 <p class="hourHeader">10am</p>
                 <hr noshade="true" color="black"/>
                 <img src="assets/cloudy.png" class="containerImage">
@@ -164,7 +165,7 @@
                 <p class="hourTemp">72&deg;</p>
             </div>
 
-            <div id="hourData8" class="hourData">
+            <div class="hourData" style="border-right: 0vh;">
                 <p class="hourHeader">10am</p>
                 <hr noshade="true" color="black"/>
                 <img src="assets/cloudy.png" class="containerImage">
@@ -177,20 +178,7 @@
                 <p class="hourTemp">72&deg;</p>
             </div>
 
-            <div id="hourData9" class="hourData">
-                <p class="hourHeader">10am</p>
-                <hr noshade="true" color="black"/>
-                <img src="assets/cloudy.png" class="containerImage">
-                                
-                <div class="hourWindDiv">
-                    <img src="assets/windSpeed.png" class="hourWindImage">
-                    <p class="hourWindText">10 mph</p>
-                </div>
-
-                <p class="hourTemp">72&deg;</p>
-            </div>
-            
-            <div id="hourData10" class="hourData">
+            <div class="hourData" style="border-right: 0vh;">
                 <p class="hourHeader">10am</p>
                 <hr noshade="true" color="black"/>
                 <img src="assets/cloudy.png" class="containerImage">
@@ -203,7 +191,7 @@
                 <p class="hourTemp">72&deg;</p>
             </div>
             
-            <div id="hourData11" class="hourData">
+            <div class="hourData" style="border-right: 0vh;">
                 <p class="hourHeader">10am</p>
                 <hr noshade="true" color="black"/>
                 <img src="assets/cloudy.png" class="containerImage">
@@ -216,7 +204,20 @@
                 <p class="hourTemp">72&deg;</p>
             </div>
             
-            <div id="hourData12">
+            <div class="hourData" style="border-right: 0vh;">
+                <p class="hourHeader">10am</p>
+                <hr noshade="true" color="black"/>
+                <img src="assets/cloudy.png" class="containerImage">
+                                
+                <div class="hourWindDiv">
+                    <img src="assets/windSpeed.png" class="hourWindImage">
+                    <p class="hourWindText">10 mph</p>
+                </div>
+
+                <p class="hourTemp">72&deg;</p>
+            </div>
+            
+            <div class="hourData">
                 <p class="hourHeader">10am</p>
                 <hr noshade="true" color="black"/>
                 <img src="assets/cloudy.png" class="containerImage">
@@ -235,7 +236,7 @@
 
         <!--boxes displaying overview for each day of the week-->
         <div id="weeklyForecastBox" class="row"> 
-            <div id="dayData1" class="dayData"> 
+            <div class="dayData" style="border-right: 0vh;"> 
                 <p class="dayHeader">Monday</p>
                 <hr noshade="true" color="black"/>
                 <img src="./assets/sunny.png" class="containerImage">
@@ -252,7 +253,7 @@
 
             </div>
             
-            <div id="dayData2" class="dayData"> 
+            <div class="dayData" style="border-right: 0vh;"> 
                 <p class="dayHeader">Monday</p>
                 <hr noshade="true" color="black"/>
                 <img src="./assets/sunny.png" class="containerImage"> 
@@ -268,7 +269,7 @@
                 </div>
             </div>
             
-            <div id="dayData3" class="dayData"> 
+            <div class="dayData" style="border-right: 0vh;"> 
                 <p class="dayHeader">Monday</p>
                 <hr noshade="true" color="black"/>
                 <img src="./assets/sunny.png" class="containerImage"> 
@@ -284,7 +285,7 @@
                 </div>
             </div>
             
-            <div id="dayData4" class="dayData"> 
+            <div class="dayData" style="border-right: 0vh;"> 
                 <p class="dayHeader">Monday</p>
                 <hr noshade="true" color="black"/>
                 <img src="./assets/sunny.png" class="containerImage"> 
@@ -300,7 +301,7 @@
                 </div>
             </div>
             
-            <div id="dayData5" class="dayData"> 
+            <div class="dayData" style="border-right: 0vh;"> 
                 <p class="dayHeader">Monday</p>
                 <hr noshade="true" color="black"/>
                 <img src="./assets/sunny.png" class="containerImage"> 
@@ -316,7 +317,7 @@
                 </div>
             </div>
             
-            <div id="dayData6" class="dayData"> 
+            <div class="dayData" style="border-right: 0vh;"> 
                 <p class="dayHeader">Monday</p>
                 <hr noshade="true" color="black"/>
                 <img src="./assets/sunny.png" class="containerImage"> 
@@ -332,7 +333,7 @@
                 </div>
             </div>
             
-            <div id="dayData7"> 
+            <div class="dayData"> 
                 <p class="dayHeader">Monday</p>
                 <hr noshade="true" color="black"/>
                 <img src="./assets/sunny.png" class="containerImage"> 
